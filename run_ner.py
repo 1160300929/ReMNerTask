@@ -358,22 +358,18 @@ def train_Grid(args, train_dataset, model,encoder,tokenizer, labels, pad_token_l
 
             model.train()
             batch = tuple(t.to(args.device) for t in batch)
-            inputs = {"input_ids": batch[0],
-                      "attention_mask": batch[1],
-                      "valid_mask": batch[2],
-                      "labels": batch[4],
-                      "img_feature":batch[5]
-
-
-
-
-
-                      }
-            if args.model_type != "distilbert":
-                inputs["token_type_ids"] = (
-                    batch[3] if args.model_type in ["bert", "xlnet"] else None
-                )  # XLM and RoBERTa don"t use segment_ids
-
+            inputs = {
+                "input_ids": batch[0],
+                "input_mask": batch[1],
+                "added_input_mask": batch[2],
+                "segment_ids": batch[3],
+                "image": batch[4],
+                "label_id": batch[5]
+            }
+            image_features,image_means,image_attention =encoder(inputs['image'])
+            inputs.pop('image')
+            image_attention = image_attention.view(-1, 2048, 49).permute(0, 2, 1)  # self.batch_size, 49, 2048
+            inputs['visual_embeds_att'] = image_attention
             outputs = model(**inputs)
             loss = outputs[0]  # model outputs are always tuple in pytorch-transformers (see doc)
 
