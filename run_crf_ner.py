@@ -347,14 +347,16 @@ def train_Object(args, train_dataset, model,encoder,encoder_cfg,tokenizer, label
             model.train()
             batch = tuple(t.to(args.device) for t in batch)
             inputs = {
-                "input_ids": batch[0],
-                "input_mask": batch[1],
-                "added_input_mask": batch[2],
-                "segment_ids": batch[3],
-                "image": batch[4],
-                "sizes": batch[5],
-                "scales_yx": batch[6],
-                "label_id": batch[7]
+                "input_ids":batch[0],
+                "input_mask":batch[1],
+                "valid_mask":batch[2],
+                "segment_ids":batch[3],
+                "label_ids":batch[4],
+                "start_ids":batch[5],
+                "end_ids":batch[6],
+                "image":batch[7],
+                "sizes":batch[8],
+                "scales_yx":batch[9]
             }
             #todo 将图片变成输入的特征
             output_dict = encoder(
@@ -365,7 +367,7 @@ def train_Object(args, train_dataset, model,encoder,encoder_cfg,tokenizer, label
                 max_detections=encoder_cfg.max_detections,
                 return_tensors='pt'
             )
-            inputs.pop('images')
+            inputs.pop('image')
             inputs.pop('sizes')
             inputs.pop('scales_yx')
             inputs['features'] = output_dict.get('roi_features')
@@ -553,10 +555,12 @@ def train_Grid(args, train_dataset, model,encoder,tokenizer, labels, pad_token_l
             inputs = {
                 "input_ids": batch[0],
                 "input_mask": batch[1],
-                "added_input_mask": batch[2],
+                "valid_mask": batch[2],
                 "segment_ids": batch[3],
-                "image": batch[4],
-                "label_id": batch[5]
+                "label_ids": batch[4],
+                "start_ids": batch[5],
+                "end_ids": batch[6],
+                "image": batch[7],
             }
             image_features,image_means,image_attention =encoder(inputs['image'])
             inputs.pop('image')

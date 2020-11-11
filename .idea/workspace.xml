@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46a908eb-b2d7-40ca-81e1-8f5d2e2651d4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ObjectFeatureExtractor.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_softmax_ner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/utils_metrics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridFeature/GridFeatureExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GridFeatureExtractor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ObjectFeature/ObjectFeatureExtractor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bert_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/bert_ner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_crf_ner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils_ner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_crf_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_crf_ner.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_crf_ner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-503">
-              <caret line="791" column="25" lean-forward="true" selection-start-line="791" selection-start-column="25" selection-end-line="791" selection-end-column="25" />
+            <state relative-caret-position="285">
+              <caret line="609" column="41" lean-forward="true" selection-start-line="609" selection-start-column="41" selection-end-line="609" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -35,8 +27,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ObjectFeatureExtractor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="222" column="24" lean-forward="true" selection-start-line="222" selection-start-column="24" selection-end-line="222" selection-end-column="24" />
+            <state relative-caret-position="299">
+              <caret line="223" column="21" selection-start-line="223" selection-start-column="21" selection-end-line="223" selection-end-column="21" />
               <folding>
                 <element signature="e#0#56#0" expanded="true" />
               </folding>
@@ -53,7 +45,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GridFeatureExtractor.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="274">
@@ -68,8 +60,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/utils_ner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="631">
-              <caret line="256" selection-start-line="256" selection-end-line="256" />
+            <state relative-caret-position="-177">
+              <caret line="205" column="8" selection-start-line="205" selection-start-column="8" selection-end-line="205" selection-end-column="8" />
               <folding>
                 <element signature="e#796#808#0" expanded="true" />
               </folding>
@@ -135,6 +127,7 @@
         <option value="$PROJECT_DIR$/utils/utils_ner.py" />
         <option value="$PROJECT_DIR$/ObjectFeatureExtractor.py" />
         <option value="$PROJECT_DIR$/GridFeatureExtractor.py" />
+        <option value="$PROJECT_DIR$/run_crf_ner.py" />
       </list>
     </option>
   </component>
@@ -472,37 +465,10 @@
     <entry file="file://$PROJECT_DIR$/run_softmax_ner.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/run_crf_ner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-503">
-          <caret line="791" column="25" lean-forward="true" selection-start-line="791" selection-start-column="25" selection-end-line="791" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/utils_ner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="631">
-          <caret line="256" selection-start-line="256" selection-end-line="256" />
-          <folding>
-            <element signature="e#796#808#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bert_ner.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3255">
           <caret line="162" column="32" lean-forward="true" selection-start-line="162" selection-start-column="32" selection-end-line="162" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ObjectFeatureExtractor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="222" column="24" lean-forward="true" selection-start-line="222" selection-start-column="24" selection-end-line="222" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -513,6 +479,33 @@
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/utils_ner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-177">
+          <caret line="205" column="8" selection-start-line="205" selection-start-column="8" selection-end-line="205" selection-end-column="8" />
+          <folding>
+            <element signature="e#796#808#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ObjectFeatureExtractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="223" column="21" selection-start-line="223" selection-start-column="21" selection-end-line="223" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_crf_ner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="609" column="41" lean-forward="true" selection-start-line="609" selection-start-column="41" selection-end-line="609" selection-end-column="41" />
         </state>
       </provider>
     </entry>
