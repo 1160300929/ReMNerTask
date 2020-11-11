@@ -22,8 +22,8 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional, Union
 import re
-from ObjectFeature import ObjectFeatureExtractor
-from GridFeature import GridFeatureExtractor
+import ObjectFeatureExtractor
+import GridFeatureExtractor
 from torch.utils.data import Dataset
 from transformers import PreTrainedTokenizer
 import torch.nn as nn
@@ -181,9 +181,9 @@ class MMNerTask_Object(MMNerTask):
         tokenizer,
         data_dir
     ) -> List[InputFeatures]:
-        return ObjectFeatureExtractor.convert_mm_examples_to_features(examples,label_list,max_seq_length,
-        tokenizer,
-        data_dir)
+        return ObjectFeatureExtractor.convert_mm_examples_to_features(examples, label_list, max_seq_length,
+                                                                      tokenizer,
+                                                                      data_dir)
 
 class MMNerTask_Grid(MMNerTask):
     def convert_examples_to_features(
@@ -195,8 +195,8 @@ class MMNerTask_Grid(MMNerTask):
         data_dir,
         crop_size=224,
     ) -> List[InputFeatures]:
-        return GridFeatureExtractor.convert_mm_examples_to_features(examples, label_list,max_seq_length, tokenizer, crop_size,
-                                        data_dir)
+        return GridFeatureExtractor.convert_mm_examples_to_features(examples, label_list, max_seq_length, tokenizer, crop_size,
+                                                                    data_dir)
 
 class MMNerDataset(Dataset):
 
@@ -253,3 +253,4 @@ def valid_sequence_output(sequence_output, valid_mask, attention_mask):
                 valid_output[i][jj] = sequence_output[i][j]
                 valid_attention_mask[i][jj] = attention_mask[i][j]
     return valid_output, valid_attention_mask
+

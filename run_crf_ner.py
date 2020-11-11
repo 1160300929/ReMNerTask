@@ -13,39 +13,231 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+
 """ Fine-tuning the library models for named entity recognition on CoNLL-2003. """
+from torch.nn import CrossEntropyLoss
 import logging
 import os
 import sys
 from dataclasses import dataclass, field
-from importlib import import_module
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Optional
 from tqdm import tqdm, trange
-
+from GridFeature.resnet import *
 import numpy as np
-from seqeval.metrics import accuracy_score, f1_score, precision_score, recall_score
-from torch import nn
+from seqeval.metrics import f1_score
 import torch
 from torch.utils.data.distributed import DistributedSampler
-from .utils_ner import MMNerTask_Grid,MMNerTask_Object,MMNerDataset,MMNerTask,MMNerTask_Pixel
+from utils.utils_ner import MMNerTask_Grid,MMNerTask_Object,MMNerDataset, MMNerTask_Pixel
 from transformers import (
     AutoConfig,
     AutoModelForTokenClassification,
     AutoTokenizer,
-    EvalPrediction,
     HfArgumentParser,
     TrainingArguments,
     set_seed,
     AdamW,
     get_linear_schedule_with_warmup,
 )
-from utils_ner import Split
+from utils.utils_ner import Split
 try:
     from torch.utils.tensorboard import SummaryWriter
 except ImportError:
     from tensorboardX import SummaryWriter
-from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
+from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
+
 logger = logging.getLogger(__name__)
+from ObjectFeatureExtractor import frcnn,frcnn_cfg
+
+from utils.utils_metrics import get_entities_bio, f1_score, classification_report
+
+#在这里编写evaluate代码.
+#
+def evaluate_Object(args, eval_dataset, model,encoder,encoder_cfg,tokenizer, labels, pad_token_label_id):
+
+    args.eval_batch_size = args.per_gpu_eval_batch_size * max(1, args.n_gpu)
+    # Note that DistributedSampler samples randomly
+    eval_sampler = SequentialSampler(eval_dataset) if args.local_rank == -1 else DistributedSampler(eval_dataset)
+    eval_dataloader = DataLoader(eval_dataset,
+                                 sampler=eval_sampler,
+                                 batch_size=args.eval_batch_size)
+
+    # multi-gpu evaluate
+    if args.n_gpu > 1 and not isinstance(model, torch.nn.DataParallel):
+        model = torch.nn.DataParallel(model)
+
+    # Eval!
+    logger.info("***** Running evaluation %s *****")
+    logger.info("  Num examples = %d", len(eval_dataset))
+    logger.info("  Batch size = %d", args.eval_batch_size)
+    eval_loss = 0.0
+    nb_eval_steps = 0
+    preds = None
+    trues = None
+    model.eval()
+    for batch in tqdm(eval_dataloader, desc="Evaluating"):
+        batch = tuple(t.to(args.device) for t in batch)
+
+        with torch.no_grad():
+            inputs = {
+                "input_ids": batch[0],
+                "input_mask": batch[1],
+                "added_input_mask": batch[2],
+                "segment_ids": batch[3],
+                "image": batch[4],
+                "sizes": batch[5],
+                "scales_yx": batch[6],
+                "label_id": batch[7]
+            }
+            # todo 将图片变成输入的特征
+            output_dict = encoder(
+                inputs['images'],
+                inputs['sizes'],
+                inputs['scales_yx'],
+                padding="max_detections",
+                max_detections=encoder_cfg.max_detections,
+                return_tensors='pt'
+            )
+            inputs.pop('images')
+            inputs.pop('sizes')
+            inputs.pop('scales_yx')
+            inputs['features'] = output_dict.get('roi_features')
+            inputs['normalized_boxes'] = output_dict.get('normalized_boxes')
+
+            outputs = model(**inputs)
+            tmp_eval_loss, tags = outputs[:2]
+            if args.n_gpu > 1:
+                tmp_eval_loss = tmp_eval_loss.mean()  # mean() to average on multi-gpu parallel evaluating
+            eval_loss += tmp_eval_loss.item()
+        nb_eval_steps += 1
+        if preds is None:
+            preds = np.array(tags)
+            trues = inputs["labels"].detach().cpu().numpy()
+        else:
+            preds = np.append(preds, np.array(tags), axis=0)
+            trues = np.append(trues, inputs["labels"].detach().cpu().numpy(), axis=0)
+
+    eval_loss = eval_loss / nb_eval_steps
+    label_map = {i: label for i, label in enumerate(labels)}
+
+    trues_list = [[] for _ in range(trues.shape[0])]
+    preds_list = [[] for _ in range(preds.shape[0])]
+
+    for i in range(trues.shape[0]):
+        for j in range(trues.shape[1]):
+            if trues[i, j] != pad_token_label_id:
+                trues_list[i].append(label_map[trues[i][j]])
+                preds_list[i].append(label_map[preds[i][j]])
+
+    true_entities = get_entities_bio(trues_list)
+    pred_entities = get_entities_bio(preds_list)
+    results = {
+        "loss": eval_loss,
+        "f1": f1_score(true_entities, pred_entities),
+        'report': classification_report(true_entities, pred_entities)
+    }
+
+    output_eval_file = os.path.join(args.output_dir, "eval_results.txt")
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
+    with open(output_eval_file, "a") as writer:
+        logger.info("***** Eval results {} *****".format(prefix))
+        writer.write("***** Eval results {} *****\n".format(prefix))
+        writer.write("***** Eval loss : {} *****\n".format(eval_loss))
+        for key in sorted(results.keys()):
+            if key == 'report_dict':
+                continue
+            logger.info("{} = {}".format(key, str(results[key])))
+            writer.write("{} = {}\n".format(key, str(results[key])))
+    return results, preds_list
+
+def evaluate_Grid(args, model, tokenizer, labels, pad_token_label_id, mode, prefix=""):
+    eval_dataset = load_and_cache_examples(args, tokenizer, labels, pad_token_label_id, mode=mode)
+
+    args.eval_batch_size = args.per_gpu_eval_batch_size * max(1, args.n_gpu)
+    # Note that DistributedSampler samples randomly
+    eval_sampler = SequentialSampler(eval_dataset) if args.local_rank == -1 else DistributedSampler(eval_dataset)
+    eval_dataloader = DataLoader(eval_dataset,
+                                 sampler=eval_sampler,
+                                 batch_size=args.eval_batch_size)
+
+    # multi-gpu evaluate
+    if args.n_gpu > 1 and not isinstance(model, torch.nn.DataParallel):
+        model = torch.nn.DataParallel(model)
+
+    # Eval!
+    logger.info("***** Running evaluation %s *****", prefix)
+    logger.info("  Num examples = %d", len(eval_dataset))
+    logger.info("  Batch size = %d", args.eval_batch_size)
+    eval_loss = 0.0
+    nb_eval_steps = 0
+    preds = None
+    trues = None
+    model.eval()
+    for batch in tqdm(eval_dataloader, desc="Evaluating"):
+        batch = tuple(t.to(args.device) for t in batch)
+
+        with torch.no_grad():
+            inputs = {"input_ids": batch[0],
+                      "attention_mask": batch[1],
+                      "valid_mask": batch[2],
+                      "labels": batch[4],"img_feature":batch[5],
+                      "decode": True}
+            if args.model_type != "distilbert":
+                inputs["token_type_ids"] = (
+                    batch[2] if args.model_type in ["bert", "xlnet"] else None
+                )  # XLM and RoBERTa don"t use segment_ids
+            outputs = model(**inputs)
+            tmp_eval_loss, tags = outputs[:2]
+            if args.n_gpu > 1:
+                tmp_eval_loss = tmp_eval_loss.mean()  # mean() to average on multi-gpu parallel evaluating
+            eval_loss += tmp_eval_loss.item()
+        nb_eval_steps += 1
+        if preds is None:
+            preds = np.array(tags)
+            trues = inputs["labels"].detach().cpu().numpy()
+        else:
+            preds = np.append(preds, np.array(tags), axis=0)
+            trues = np.append(trues, inputs["labels"].detach().cpu().numpy(), axis=0)
+
+    eval_loss = eval_loss / nb_eval_steps
+    label_map = {i: label for i, label in enumerate(labels)}
+
+    trues_list = [[] for _ in range(trues.shape[0])]
+    preds_list = [[] for _ in range(preds.shape[0])]
+
+    for i in range(trues.shape[0]):
+        for j in range(trues.shape[1]):
+            if trues[i, j] != pad_token_label_id:
+                trues_list[i].append(label_map[trues[i][j]])
+                preds_list[i].append(label_map[preds[i][j]])
+
+    true_entities = get_entities_bio(trues_list)
+    pred_entities = get_entities_bio(preds_list)
+    results = {
+        "loss": eval_loss,
+        "f1": f1_score(true_entities, pred_entities),
+        'report': classification_report(true_entities, pred_entities)
+    }
+
+    output_eval_file = os.path.join(args.output_dir, "eval_results.txt")
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
+    with open(output_eval_file, "a") as writer:
+        logger.info("***** Eval results {} *****".format(prefix))
+        writer.write("***** Eval results {} *****\n".format(prefix))
+        writer.write("***** Eval loss : {} *****\n".format(eval_loss))
+        for key in sorted(results.keys()):
+            if key == 'report_dict':
+                continue
+            logger.info("{} = {}".format(key, str(results[key])))
+            writer.write("{} = {}\n".format(key, str(results[key])))
+    return results, preds_list
 
 def train_Object(args, train_dataset, model,encoder,encoder_cfg,tokenizer, labels, pad_token_label_id):
     if args.local_rank in [-1, 0]:
@@ -498,7 +690,7 @@ def main():
     # See all possible arguments in src/transformers/training_args.py
     # or by passing the --help flag to this script.
     # We now keep distinct sets of args, for a cleaner separation of concerns.
-
+    pad_token_label_id = CrossEntropyLoss().ignore_index
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))#定义训练参数
     if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
         # If we pass only one argument to the script and it's the path to a json file,
@@ -516,9 +708,13 @@ def main():
         raise ValueError(
             f"Output directory ({training_args.output_dir}) already exists and is not empty. Use --overwrite_output_dir to overcome."
         )
+
     #定义数据读取类
     if model_args.feature_type is 'Object':
         token_classification_task = MMNerTask_Object()
+        net = getattr(resnet, 'resnet152')()
+        net.load_state_dict(torch.load(os.path.join(model_args.resnet_root, 'resnet152.pth')))
+        encoder = myResnet(net, model_args.fine_tune_cnn, training_args.device)
     elif model_args.feature_type is 'Grid':
         token_classification_task = MMNerTask_Grid()
     else:
@@ -574,22 +770,9 @@ def main():
         config=config,
         cache_dir=model_args.cache_dir,
     )
+    model.to(training_args.device)
 
     # Get datasets
-    train_dataset = (
-        MMNerDataset(
-            token_classification_task=token_classification_task,
-            data_dir=data_args.data_dir,
-            tokenizer=tokenizer,
-            labels=labels,
-            model_type=config.model_type,
-            max_seq_length=data_args.max_seq_length,
-            overwrite_cache=data_args.overwrite_cache,
-            mode=Split.train,
-        )
-        if training_args.do_train
-        else None
-    )
     eval_dataset = (
         MMNerDataset(
             token_classification_task=token_classification_task,
@@ -604,42 +787,50 @@ def main():
         if training_args.do_eval
         else None
     )
-
-
-    def align_predictions(predictions: np.ndarray, label_ids: np.ndarray) -> Tuple[List[int], List[int]]:
-        preds = np.argmax(predictions, axis=2)
-
-        batch_size, seq_len = preds.shape
-
-        out_label_list = [[] for _ in range(batch_size)]
-        preds_list = [[] for _ in range(batch_size)]
-
-        for i in range(batch_size):
-            for j in range(seq_len):
-                if label_ids[i, j] != nn.CrossEntropyLoss().ignore_index:
-                    out_label_list[i].append(label_map[label_ids[i][j]])
-                    preds_list[i].append(label_map[preds[i][j]])
-
-        return preds_list, out_label_list
-
-    def compute_metrics(p: EvalPrediction) -> Dict:
-        preds_list, out_label_list = align_predictions(p.predictions, p.label_ids)
-        return {
-            "accuracy_score": accuracy_score(out_label_list, preds_list),
-            "precision": precision_score(out_label_list, preds_list),
-            "recall": recall_score(out_label_list, preds_list),
-            "f1": f1_score(out_label_list, preds_list),
-        }
-
+    if training_args.do_train:
+        train_dataset = (
+            MMNerDataset(
+                token_classification_task=token_classification_task,
+                data_dir=data_args.data_dir,
+                tokenizer=tokenizer,
+                labels=labels,
+                model_type=config.model_type,
+                max_seq_length=data_args.max_seq_length,
+                overwrite_cache=data_args.overwrite_cache,
+                mode=Split.train,
+            )
+            if training_args.do_train
+            else None
+        )
+        if model_args.feature_type is 'Object':
+            global_step, tr_loss = train_Object(model_args, train_dataset, model,frcnn,frcnn_cfg,tokenizer, labels)
+        elif model_args.feature_type is 'Grid':
+            global_step, tr_loss = train_Grid(model_args, train_dataset, model,encoder,tokenizer, labels, pad_token_label_id)
+    ##
+    # save model
     #
-    #
-    #这里 编写 训练代码
-    #
-    #
-    #
+    ##
+    if training_args.do_train and (training_args.local_rank == -1 or torch.distributed.get_rank() == 0):
+        # Create output directory if needed
+        if not os.path.exists(training_args.output_dir) and training_args.local_rank in [-1, 0]:
+            os.makedirs(training_args.output_dir)
 
+        logger.info("Saving model checkpoint to %s", training_args.output_dir)
+        # Save a trained model, configuration and tokenizer using `save_pretrained()`.
+        # They can then be reloaded using `from_pretrained()`
+        model_to_save = (
+            model.module if hasattr(model, "module") else model)  # Take care of distributed/parallel training
+        model_to_save.save_pretrained(training_args.output_dir)
+        tokenizer.save_pretrained(training_args.output_dir)
+        # Good practice: save your training arguments together with the trained model
+        torch.save(training_args, os.path.join(training_args.output_dir, "training_args.bin"))
 
-
+    if training_args.do_eval and training_args.local_rank in [-1, 0]:
+        results, _ = evaluate(args, model, tokenizer, labels, pad_token_label_id, mode="dev", prefix='dev')
+        output_eval_file = os.path.join(args.output_dir, "eval_results.txt")
+        with open(output_eval_file, "a") as writer:
+            writer.write('***** Predict in dev dataset *****')
+            writer.write("{} = {}\n".format('report', str(results['report'])))
 
 
 

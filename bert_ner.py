@@ -2,10 +2,10 @@ from transformers import BertPreTrainedModel,BertModel,LxmertPreTrainedModel,Lxm
 import torch
 import torch.utils.checkpoint
 from torch import nn
-from torch.nn import CrossEntropyLoss, MSELoss
+from torch.nn import CrossEntropyLoss
 from losses import *
 from Attention import AdaptiveCoFusion
-from .utils_ner import valid_sequence_output
+from utils.utils_ner import valid_sequence_output
 
 
 class BertSoftmaxNer(BertPreTrainedModel):
@@ -24,7 +24,7 @@ class BertSoftmaxNer(BertPreTrainedModel):
     def forward(
         self,
         input_ids=None,
-        input_v_features=None,
+        visual_feats=None,
         valid_mask=None,
         attention_mask=None,
         token_type_ids=None,
@@ -59,7 +59,7 @@ class BertSoftmaxNer(BertPreTrainedModel):
 
         sequence_output = self.dropout(sequence_output)
 
-        logits = self.mmEncoder(sequence_output,input_v_features)
+        logits = self.mmEncoder(sequence_output,visual_feats)
 
         sequence_output, attention_mask = valid_sequence_output(logits, valid_mask, attention_mask)
         sequence_output = self.dropout(sequence_output)
@@ -102,7 +102,7 @@ class BertCrfNer(BertPreTrainedModel):
     def forward(
         self,
         input_ids=None,
-        input_v_features=None,
+        visual_feats=None,
         valid_mask=None,
         attention_mask=None,
         token_type_ids=None,
@@ -137,7 +137,7 @@ class BertCrfNer(BertPreTrainedModel):
 
         sequence_output = self.dropout(sequence_output)
 
-        logits = self.mmEncoder(sequence_output, input_v_features)
+        logits = self.mmEncoder(sequence_output, visual_feats)
 
         sequence_output, attention_mask = valid_sequence_output(logits, valid_mask, attention_mask)
         sequence_output = self.dropout(sequence_output)

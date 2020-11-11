@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/utils_ner.py" line="234" />
+    <bookmark url="file://$PROJECT_DIR$/utils/utils_ner.py" line="234" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46a908eb-b2d7-40ca-81e1-8f5d2e2651d4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ObjectFeatureExtractor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run_softmax_ner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/utils_metrics.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_ner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GridFeature/GridFeatureExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GridFeatureExtractor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ObjectFeature/ObjectFeatureExtractor.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bert_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/bert_ner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_crf_ner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils_ner.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,13 +23,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/run_ner.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/run_crf_ner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="433" column="21" lean-forward="true" selection-start-line="433" selection-start-column="21" selection-end-line="433" selection-end-column="21" />
+            <state relative-caret-position="-503">
+              <caret line="791" column="25" lean-forward="true" selection-start-line="791" selection-start-column="25" selection-end-line="791" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ObjectFeatureExtractor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="222" column="24" lean-forward="true" selection-start-line="222" selection-start-column="24" selection-end-line="222" selection-end-column="24" />
               <folding>
-                <element signature="e#792#806#0" expanded="true" />
+                <element signature="e#0#56#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -31,55 +47,32 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bert_ner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="132" column="36" lean-forward="true" selection-start-line="132" selection-start-column="36" selection-end-line="132" selection-end-column="36" />
+            <state relative-caret-position="3255">
+              <caret line="162" column="32" lean-forward="true" selection-start-line="162" selection-start-column="32" selection-end-line="162" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GridFeature/GridFeatureExtractor.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/GridFeatureExtractor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="154" column="82" selection-start-line="153" selection-start-column="28" selection-end-line="154" selection-end-column="82" />
+            <state relative-caret-position="274">
+              <caret line="221" lean-forward="true" selection-start-line="221" selection-end-line="221" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#37#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Attention.py">
+        <entry file="file://$PROJECT_DIR$/utils/utils_ner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2688">
-              <caret line="140" column="21" selection-start-line="140" selection-start-column="21" selection-end-line="140" selection-end-column="21" />
+            <state relative-caret-position="631">
+              <caret line="256" selection-start-line="256" selection-end-line="256" />
               <folding>
-                <element signature="e#0#12#0" expanded="true" />
+                <element signature="e#796#808#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configuration_mm.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/labels.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://D:/anaconda3/Lib/site-packages/transformers/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8946">
-              <caret line="608" column="28" selection-start-line="608" selection-start-column="28" selection-end-line="608" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -105,6 +98,10 @@
       <find>auxlabel_id</find>
       <find>auxlabel</find>
       <find>args</find>
+      <find>device</find>
+      <find>device</find>
+      <find>local_rank</find>
+      <find>input_v_features</find>
     </findStrings>
     <replaceStrings>
       <replace>data_dir</replace>
@@ -121,20 +118,23 @@
         <option value="$PROJECT_DIR$/config_mm.py" />
         <option value="$PROJECT_DIR$/Attention.py" />
         <option value="$PROJECT_DIR$/losses/__init__.py" />
-        <option value="$PROJECT_DIR$/GridFeatureExtractor.py" />
-        <option value="$PROJECT_DIR$/ObjectFeatureExtractor.py" />
         <option value="$PROJECT_DIR$/ObjectFeature/processing_image.py" />
         <option value="$PROJECT_DIR$/gridFeature/resnet/__init__.py" />
         <option value="$PROJECT_DIR$/ObjectFeature/modeling_frcnn.py" />
         <option value="$PROJECT_DIR$/tasks.py" />
         <option value="$PROJECT_DIR$/gridFeature/GridFeatureExtractor.py" />
         <option value="$PROJECT_DIR$/lxmert_ner.py" />
-        <option value="$PROJECT_DIR$/bert_ner.py" />
         <option value="$PROJECT_DIR$/configuration_mm.py" />
         <option value="$PROJECT_DIR$/utils_ner.py" />
-        <option value="$PROJECT_DIR$/ObjectFeature/ObjectFeatureExtractor.py" />
         <option value="$PROJECT_DIR$/GridFeature/GridFeatureExtractor.py" />
+        <option value="$PROJECT_DIR$/utils_metrics.py" />
         <option value="$PROJECT_DIR$/run_ner.py" />
+        <option value="$PROJECT_DIR$/run_softmax_ner.py" />
+        <option value="$PROJECT_DIR$/bert_ner.py" />
+        <option value="$PROJECT_DIR$/ObjectFeature/ObjectFeatureExtractor.py" />
+        <option value="$PROJECT_DIR$/utils/utils_ner.py" />
+        <option value="$PROJECT_DIR$/ObjectFeatureExtractor.py" />
+        <option value="$PROJECT_DIR$/GridFeatureExtractor.py" />
       </list>
     </option>
   </component>
@@ -185,6 +185,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\py_project\Re_MNER" />
+      <recent name="D:\py_project\Re_MNER\utils" />
       <recent name="D:\py_project\Re_MNER\gridFeature" />
       <recent name="D:\py_project\Re_MNER\ObjectFeature" />
     </key>
@@ -336,16 +338,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GridFeature/resnet/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ObjectFeature/extracting_data.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -416,32 +408,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ObjectFeature/ObjectFeatureExtractor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3507">
-          <caret line="180" column="114" selection-start-line="179" selection-start-column="28" selection-end-line="180" selection-end-column="114" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ObjectFeature/processing_image.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1344">
           <caret line="72" column="8" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
           <folding>
             <element signature="e#662#672#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils_ner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3906">
-          <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
-          <folding>
-            <element signature="e#796#808#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -473,29 +445,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GridFeature/GridFeatureExtractor.py">
+    <entry file="file://$PROJECT_DIR$/GridFeature/resnet/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="154" column="82" selection-start-line="153" selection-start-column="28" selection-end-line="154" selection-end-column="82" />
+        <state relative-caret-position="21">
+          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/training_args.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="35" column="6" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/utils_metrics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="289" column="17" lean-forward="true" selection-start-line="289" selection-start-column="17" selection-end-line="289" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_softmax_ner.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_crf_ner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-503">
+          <caret line="791" column="25" lean-forward="true" selection-start-line="791" selection-start-column="25" selection-end-line="791" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/utils_ner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="631">
+          <caret line="256" selection-start-line="256" selection-end-line="256" />
+          <folding>
+            <element signature="e#796#808#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bert_ner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="132" column="36" lean-forward="true" selection-start-line="132" selection-start-column="36" selection-end-line="132" selection-end-column="36" />
+        <state relative-caret-position="3255">
+          <caret line="162" column="32" lean-forward="true" selection-start-line="162" selection-start-column="32" selection-end-line="162" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run_ner.py">
+    <entry file="file://$PROJECT_DIR$/ObjectFeatureExtractor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="433" column="21" lean-forward="true" selection-start-line="433" selection-start-column="21" selection-end-line="433" selection-end-column="21" />
+        <state relative-caret-position="264">
+          <caret line="222" column="24" lean-forward="true" selection-start-line="222" selection-start-column="24" selection-end-line="222" selection-end-column="24" />
           <folding>
-            <element signature="e#792#806#0" expanded="true" />
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GridFeatureExtractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="221" lean-forward="true" selection-start-line="221" selection-end-line="221" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
