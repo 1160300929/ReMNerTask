@@ -173,15 +173,13 @@ def train_Object(args, train_dataset, model,encoder,encoder_cfg,tokenizer, label
                 max_detections=encoder_cfg.max_detections,
                 return_tensors='pt'
             )
+            inputs.pop('images')
+            inputs.pop('sizes')
+            inputs.pop('scales_yx')
+            inputs['features'] = output_dict.get('roi_features')
+            inputs['normalized_boxes'] = output_dict.get('normalized_boxes')
 
             #todo:将inputs组织成模型可以接受的输入
-
-            outputs = model(**inputs)
-            if args.model_type != "distilbert":
-                inputs["token_type_ids"] = (
-                    batch[3] if args.model_type in ["bert", "xlnet"] else None
-                )  # XLM and RoBERTa don"t use segment_ids
-
             outputs = model(**inputs)
             loss = outputs[0]  # model outputs are always tuple in pytorch-transformers (see doc)
 
