@@ -8,6 +8,9 @@ from Attention import AdaptiveCoFusion
 from utils.utils_ner import valid_sequence_output
 
 
+
+
+
 class BertSoftmaxNer(BertPreTrainedModel):
 
     def __init__(self,args,config):
@@ -309,3 +312,32 @@ class LxmertCrfNer(LxmertPreTrainedModel):
             outputs = (-1 * loss,) + outputs
 
         return outputs
+
+
+MMCRF_MAPPING = {
+    "bertsoftmax":BertSoftmaxNer,
+    "bertcrf":BertCrfNer,
+    "lxmertsoftmax":LxmertSoftmaxNer,
+    "lxmertcrf":LxmertCrfNer
+}
+
+class AutoModelForNER:
+    r"""
+    This is a generic model class that will be instantiated as one of the model classes of the library---with a
+    token classification head---when created with the when created with the
+    :meth:`~transformers.AutoModelForTokenClassification.from_pretrained` class method or the
+    :meth:`~transformers.AutoModelForTokenClassification.from_config` class method.
+
+    This class cannot be instantiated directly using ``__init__()`` (throws an error).
+    """
+
+    def __init__(self):
+        raise EnvironmentError(
+            "AutoModelForTokenClassification is designed to be instantiated "
+            "using the `AutoModelForTokenClassification.from_pretrained(pretrained_model_name_or_path)` or "
+            "`AutoModelForTokenClassification.from_config(config)` methods."
+        )
+
+    @classmethod
+    def from_pretrained(cls, pretrained_model_name_or_path, args,config):
+        return MMCRF_MAPPING[pretrained_model_name_or_path].from_pretrained(args,config)

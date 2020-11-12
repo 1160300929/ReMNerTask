@@ -19,7 +19,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from MMArgument import *
-
+from bert_ner import *
 """ Fine-tuning the library models for named entity recognition on CoNLL-2003. """
 from torch.nn import CrossEntropyLoss
 import logging
@@ -719,14 +719,12 @@ def main():
         cache_dir=args.cache_dir,
         use_fast=args.use_fast,
     )
-    model = AutoModelForTokenClassification.from_pretrained(
+    model = AutoModelForNER.from_pretrained(
         args.model_name_or_path,
-        from_tf=bool(".ckpt" in args.model_name_or_path),
+        args,
         config=config,
-        cache_dir=args.cache_dir,
     )
     model.to(args.device)
-######sssssssssssssssssssssss
     # Get datasets
     eval_dataset = (
         MMNerDataset(

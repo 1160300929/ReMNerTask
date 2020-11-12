@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46a908eb-b2d7-40ca-81e1-8f5d2e2651d4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/bert_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/bert_ner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run_crf_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_crf_ner.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,11 +16,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run_crf_ner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="596">
-              <caret line="728" column="29" selection-start-line="728" selection-start-column="29" selection-end-line="728" selection-end-column="29" />
+            <state relative-caret-position="3158">
+              <caret line="798" lean-forward="true" selection-start-line="798" selection-end-line="798" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/bert_ner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="322" lean-forward="true" selection-start-line="322" selection-end-line="322" />
             </state>
           </provider>
         </entry>
@@ -55,19 +65,10 @@
         <entry file="file://$PROJECT_DIR$/MMArgument.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="252">
-              <caret line="12" column="52" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
+              <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/run_softmax_ner.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
@@ -87,8 +88,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/anaconda3/Lib/site-packages/transformers/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="331" column="22" selection-start-line="331" selection-start-column="22" selection-end-line="331" selection-end-column="22" />
+            <state relative-caret-position="272">
+              <caret line="331" column="24" selection-start-line="331" selection-start-column="24" selection-end-line="331" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -96,8 +97,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/anaconda3/Lib/site-packages/transformers/modeling_auto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1327" column="6" selection-start-line="1327" selection-start-column="6" selection-end-line="1327" selection-end-column="6" />
+            <state relative-caret-position="365">
+              <caret line="1414" column="13" lean-forward="true" selection-start-line="1414" selection-start-column="13" selection-end-line="1414" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -136,6 +137,7 @@
       <find>local_rank</find>
       <find>input_v_features</find>
       <find>automodelfor</find>
+      <find>AutoModelForTokenClassification</find>
     </findStrings>
     <replaceStrings>
       <replace>data_dir</replace>
@@ -165,12 +167,12 @@
         <option value="$PROJECT_DIR$/run_ner.py" />
         <option value="$PROJECT_DIR$/ObjectFeature/ObjectFeatureExtractor.py" />
         <option value="$PROJECT_DIR$/utils/utils_ner.py" />
-        <option value="$PROJECT_DIR$/bert_ner.py" />
         <option value="$PROJECT_DIR$/ObjectFeatureExtractor.py" />
         <option value="$PROJECT_DIR$/GridFeatureExtractor.py" />
         <option value="$PROJECT_DIR$/run_softmax_ner.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/MMArgument.py" />
+        <option value="$PROJECT_DIR$/bert_ner.py" />
         <option value="$PROJECT_DIR$/run_crf_ner.py" />
       </list>
     </option>
@@ -507,13 +509,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bert_ner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="174" column="23" lean-forward="true" selection-start-line="174" selection-start-column="23" selection-end-line="174" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run_softmax_ner.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
@@ -555,10 +550,17 @@
     <entry file="file://$PROJECT_DIR$/MMArgument.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
-          <caret line="12" column="52" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
+          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="331" column="24" selection-start-line="331" selection-start-column="24" selection-end-line="331" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -569,20 +571,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/modeling_auto.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1327" column="6" selection-start-line="1327" selection-start-column="6" selection-end-line="1327" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="331" column="22" selection-start-line="331" selection-start-column="22" selection-end-line="331" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/anaconda3/Lib/site-packages/transformers/utils/dummy_pt_objects.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
@@ -590,10 +578,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/modeling_auto.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="1414" column="13" lean-forward="true" selection-start-line="1414" selection-start-column="13" selection-end-line="1414" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/run_crf_ner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="596">
-          <caret line="728" column="29" selection-start-line="728" selection-start-column="29" selection-end-line="728" selection-end-column="29" />
+        <state relative-caret-position="3158">
+          <caret line="798" lean-forward="true" selection-start-line="798" selection-end-line="798" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bert_ner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="322" lean-forward="true" selection-start-line="322" selection-end-line="322" />
         </state>
       </provider>
     </entry>
