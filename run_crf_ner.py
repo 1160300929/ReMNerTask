@@ -18,15 +18,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
+from MMArgument import *
 
 """ Fine-tuning the library models for named entity recognition on CoNLL-2003. """
 from torch.nn import CrossEntropyLoss
 import logging
 import os
 import sys
-from dataclasses import dataclass, field
-from typing import Dict, Optional
+
+from typing import Dict
 from tqdm import tqdm, trange
 from GridFeature.resnet import *
 import numpy as np
@@ -58,7 +58,7 @@ from utils.utils_metrics import get_entities_bio, f1_score, classification_repor
 
 #在这里编写evaluate代码.
 #
-def evaluate_Object(args, eval_dataset, model,encoder,encoder_cfg,tokenizer, labels, pad_token_label_id):
+def evaluate_Object(args, eval_dataset, model,encoder,encoder_cfg,labels, pad_token_label_id,prefix=""):
 
     args.eval_batch_size = args.per_gpu_eval_batch_size * max(1, args.n_gpu)
     # Note that DistributedSampler samples randomly
@@ -84,15 +84,16 @@ def evaluate_Object(args, eval_dataset, model,encoder,encoder_cfg,tokenizer, lab
         batch = tuple(t.to(args.device) for t in batch)
 
         with torch.no_grad():
+            batch = tuple(t.to(args.device) for t in batch)
             inputs = {
                 "input_ids": batch[0],
                 "input_mask": batch[1],
-                "added_input_mask": batch[2],
+                "valid_mask": batch[2],
                 "segment_ids": batch[3],
-                "image": batch[4],
-                "sizes": batch[5],
-                "scales_yx": batch[6],
-                "label_id": batch[7]
+                "label_ids": batch[4],
+                "image": batch[5],
+                "sizes": batch[6],
+                "scales_yx": batch[7]
             }
             # todo 将图片变成输入的特征
             output_dict = encoder(
@@ -103,7 +104,7 @@ def evaluate_Object(args, eval_dataset, model,encoder,encoder_cfg,tokenizer, lab
                 max_detections=encoder_cfg.max_detections,
                 return_tensors='pt'
             )
-            inputs.pop('images')
+            inputs.pop('image')
             inputs.pop('sizes')
             inputs.pop('scales_yx')
             inputs['features'] = output_dict.get('roi_features')
@@ -156,8 +157,7 @@ def evaluate_Object(args, eval_dataset, model,encoder,encoder_cfg,tokenizer, lab
             writer.write("{} = {}\n".format(key, str(results[key])))
     return results, preds_list
 
-def evaluate_Grid(args, model, tokenizer, labels, pad_token_label_id, mode, prefix=""):
-    eval_dataset = load_and_cache_examples(args, tokenizer, labels, pad_token_label_id, mode=mode)
+def evaluate_Grid(args, eval_dataset,model,encoder,labels, pad_token_label_id,  prefix=""):
 
     args.eval_batch_size = args.per_gpu_eval_batch_size * max(1, args.n_gpu)
     # Note that DistributedSampler samples randomly
@@ -183,15 +183,18 @@ def evaluate_Grid(args, model, tokenizer, labels, pad_token_label_id, mode, pref
         batch = tuple(t.to(args.device) for t in batch)
 
         with torch.no_grad():
-            inputs = {"input_ids": batch[0],
-                      "attention_mask": batch[1],
-                      "valid_mask": batch[2],
-                      "labels": batch[4],"img_feature":batch[5],
-                      "decode": True}
-            if args.model_type != "distilbert":
-                inputs["token_type_ids"] = (
-                    batch[2] if args.model_type in ["bert", "xlnet"] else None
-                )  # XLM and RoBERTa don"t use segment_ids
+            inputs = {
+                "input_ids": batch[0],
+                "input_mask": batch[1],
+                "valid_mask": batch[2],
+                "segment_ids": batch[3],
+                "label_ids": batch[4],
+                "image": batch[5],
+            }
+            image_features, image_means, image_attention = encoder(inputs['image'])
+            inputs.pop('image')
+            image_attention = image_attention.view(-1, 2048, 49).permute(0, 2, 1)  # self.batch_size, 49, 2048
+            inputs['visual_embeds_att'] = image_attention
             outputs = model(**inputs)
             tmp_eval_loss, tags = outputs[:2]
             if args.n_gpu > 1:
@@ -352,11 +355,9 @@ def train_Object(args, train_dataset, model,encoder,encoder_cfg,tokenizer, label
                 "valid_mask":batch[2],
                 "segment_ids":batch[3],
                 "label_ids":batch[4],
-                "start_ids":batch[5],
-                "end_ids":batch[6],
-                "image":batch[7],
-                "sizes":batch[8],
-                "scales_yx":batch[9]
+                "image":batch[5],
+                "sizes":batch[6],
+                "scales_yx":batch[7]
             }
             #todo 将图片变成输入的特征
             output_dict = encoder(
@@ -406,8 +407,9 @@ def train_Object(args, train_dataset, model,encoder,encoder_cfg,tokenizer, label
                     if (
                             args.local_rank == -1 and args.evaluate_during_training
                     ):  # Only evaluate when single GPU otherwise metrics may not average well
-                        results, _ = evaluate(args, model, tokenizer, labels, pad_token_label_id, mode="dev",
+                        results, _ = evaluate_Object(args, model, tokenizer, labels, pad_token_label_id, mode="dev",
                                               prefix=global_step)
+
                         for key, value in results.items():
                             if isinstance(value, float) or isinstance(value, int):
                                 tb_writer.add_scalar("eval_{}".format(key), value, global_step)
@@ -558,9 +560,7 @@ def train_Grid(args, train_dataset, model,encoder,tokenizer, labels, pad_token_l
                 "valid_mask": batch[2],
                 "segment_ids": batch[3],
                 "label_ids": batch[4],
-                "start_ids": batch[5],
-                "end_ids": batch[6],
-                "image": batch[7],
+                "image": batch[5],
             }
             image_features,image_means,image_attention =encoder(inputs['image'])
             inputs.pop('image')
@@ -598,7 +598,7 @@ def train_Grid(args, train_dataset, model,encoder,tokenizer, labels, pad_token_l
                     if (
                             args.local_rank == -1 and args.evaluate_during_training
                     ):  # Only evaluate when single GPU otherwise metrics may not average well
-                        results, _ = evaluate(args, model, tokenizer, labels, pad_token_label_id, mode="dev",
+                        results, _ = evaluate_Grid(args, model, tokenizer, labels, pad_token_label_id, mode="dev",
                                               prefix=global_step)
                         for key, value in results.items():
                             if isinstance(value, float) or isinstance(value, int):
@@ -638,58 +638,6 @@ def train_Grid(args, train_dataset, model,encoder,tokenizer, labels, pad_token_l
     return global_step, tr_loss / global_step
 
 
-
-@dataclass
-class ModelArguments:
-    """
-    Arguments pertaining to which model/config/tokenizer we are going to fine-tune from.
-    """
-
-    model_name_or_path: str = field(
-        metadata={"help": "Path to pretrained model or model identifier from huggingface.co/models"}
-    )
-    config_name: Optional[str] = field(
-        default=None, metadata={"help": "Pretrained config name or path if not the same as model_name"}
-    )
-    task_type: Optional[str] = field(
-        default="NER", metadata={"help": "Task type to fine tune in training (e.g. NER, POS, etc)"}
-    )
-    tokenizer_name: Optional[str] = field(
-        default=None, metadata={"help": "Pretrained tokenizer name or path if not the same as model_name"}
-    )
-    use_fast: bool = field(default=False, metadata={"help": "Set this flag to use fast tokenization."})
-    # If you want to tweak more attributes on your tokenizer, you should do it in a distinct script,
-    # or just modify its tokenizer_config.json.
-    cache_dir: Optional[str] = field(
-        default=None, metadata={"help": "Where do you want to store the pretrained models downloaded from s3"}
-    )
-
-
-@dataclass
-class DataTrainingArguments:
-    """
-    Arguments pertaining to what data we are going to input our model for training and eval.
-    """
-
-    data_dir: str = field(
-        metadata={"help": "The input data dir. Should contain the .txt files for a CoNLL-2003-formatted task."}
-    )
-    labels: Optional[str] = field(
-        default=None,
-        metadata={"help": "Path to a file containing all labels. If not specified, CoNLL-2003 labels are used."},
-    )
-    max_seq_length: int = field(
-        default=128,
-        metadata={
-            "help": "The maximum total input sequence length after tokenization. Sequences longer "
-            "than this will be truncated, sequences shorter will be padded."
-        },
-    )
-    overwrite_cache: bool = field(
-        default=False, metadata={"help": "Overwrite the cached training and evaluation sets"}
-    )
-
-
 def main():
     # See all possible arguments in src/transformers/training_args.py
     # or by passing the --help flag to this script.
@@ -712,14 +660,14 @@ def main():
         raise ValueError(
             f"Output directory ({training_args.output_dir}) already exists and is not empty. Use --overwrite_output_dir to overcome."
         )
-
-    #定义数据读取类
-    if model_args.feature_type is 'Object':
+    args = MMArgument(model_args,data_args,training_args)
+    # 定义数据读取类
+    if args.feature_type is 'Object':
         token_classification_task = MMNerTask_Object()
         net = getattr(resnet, 'resnet152')()
-        net.load_state_dict(torch.load(os.path.join(model_args.resnet_root, 'resnet152.pth')))
-        encoder = myResnet(net, model_args.fine_tune_cnn, training_args.device)
-    elif model_args.feature_type is 'Grid':
+        net.load_state_dict(torch.load(os.path.join(args.resnet_root, 'resnet152.pth')))
+        encoder = myResnet(net, args.fine_tune_cnn, args.device)
+    elif args.feature_type is 'Grid':
         token_classification_task = MMNerTask_Grid()
     else:
         token_classification_task = MMNerTask_Pixel()
@@ -727,26 +675,26 @@ def main():
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
         datefmt="%m/%d/%Y %H:%M:%S",
-        level=logging.INFO if training_args.local_rank in [-1, 0] else logging.WARN,
+        level=logging.INFO if args.local_rank in [-1, 0] else logging.WARN,
     )
     logger.warning(
         "Process rank: %s, device: %s, n_gpu: %s, distributed training: %s, 16-bits training: %s",
-        training_args.local_rank,
-        training_args.device,
-        training_args.n_gpu,
-        bool(training_args.local_rank != -1),
-        training_args.fp16,
+        args.local_rank,
+        args.device,
+        args.n_gpu,
+        bool(args.local_rank != -1),
+        args.fp16,
     )
-    logger.info("Training/evaluation parameters %s", training_args)
+    logger.info("Training/evaluation parameters %s", args)
 
     # Set seed
-    set_seed(training_args.seed)
-    if data_args.task_name == "twitter2017":
-        data_args.path_image = "data/twitter2017_images/"
-    elif data_args.task_name == "twitter2015":
-        data_args.path_image = "data/twitter2015_images/"
+    set_seed(args.seed)
+    if args.task_name == "twitter2017":
+        args.path_image = "data/twitter2017_images/"
+    elif args.task_name == "twitter2015":
+        args.path_image = "data/twitter2015_images/"
     # Prepare CONLL-2003 task
-    labels = token_classification_task.get_labels(data_args.labels)
+    labels = token_classification_task.get_labels(args.labels)
     label_map: Dict[int, str] = {i: label for i, label in enumerate(labels)}
     num_labels = len(labels)
 
@@ -757,85 +705,95 @@ def main():
     # download model & vocab.
 
     config = AutoConfig.from_pretrained(
-        model_args.config_name if model_args.config_name else model_args.model_name_or_path,
+        args.config_name if args.config_name else args.model_name_or_path,
         num_labels=num_labels,
         id2label=label_map,
         label2id={label: i for i, label in enumerate(labels)},
-        cache_dir=model_args.cache_dir,
+        cache_dir=args.cache_dir,
     )
     tokenizer = AutoTokenizer.from_pretrained(
-        model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
-        cache_dir=model_args.cache_dir,
-        use_fast=model_args.use_fast,
+        args.tokenizer_name if args.tokenizer_name else args.model_name_or_path,
+        cache_dir=args.cache_dir,
+        use_fast=args.use_fast,
     )
     model = AutoModelForTokenClassification.from_pretrained(
-        model_args.model_name_or_path,
-        from_tf=bool(".ckpt" in model_args.model_name_or_path),
+        args.model_name_or_path,
+        from_tf=bool(".ckpt" in args.model_name_or_path),
         config=config,
-        cache_dir=model_args.cache_dir,
+        cache_dir=args.cache_dir,
     )
-    model.to(training_args.device)
+    model.to(args.device)
 
     # Get datasets
     eval_dataset = (
         MMNerDataset(
             token_classification_task=token_classification_task,
-            data_dir=data_args.data_dir,
+            data_dir=args.data_dir,
             tokenizer=tokenizer,
             labels=labels,
             model_type=config.model_type,
-            max_seq_length=data_args.max_seq_length,
-            overwrite_cache=data_args.overwrite_cache,
+            max_seq_length=args.max_seq_length,
+            overwrite_cache=args.overwrite_cache,
             mode=Split.dev,
         )
-        if training_args.do_eval
+        if args.do_eval
         else None
     )
-    if training_args.do_train:
+    if args.do_train:
         train_dataset = (
             MMNerDataset(
                 token_classification_task=token_classification_task,
-                data_dir=data_args.data_dir,
+                data_dir=args.data_dir,
                 tokenizer=tokenizer,
                 labels=labels,
                 model_type=config.model_type,
-                max_seq_length=data_args.max_seq_length,
-                overwrite_cache=data_args.overwrite_cache,
+                max_seq_length=args.max_seq_length,
+                overwrite_cache=args.overwrite_cache,
                 mode=Split.train,
             )
-            if training_args.do_train
+            if args.do_train
             else None
         )
-        if model_args.feature_type is 'Object':
-            global_step, tr_loss = train_Object(model_args, train_dataset, model,frcnn,frcnn_cfg,tokenizer, labels)
-        elif model_args.feature_type is 'Grid':
-            global_step, tr_loss = train_Grid(model_args, train_dataset, model,encoder,tokenizer, labels, pad_token_label_id)
+        if args.feature_type is 'Object':
+            global_step, tr_loss = train_Object(args, train_dataset, model, frcnn, frcnn_cfg, tokenizer, labels)
+        elif args.feature_type is 'Grid':
+            global_step, tr_loss = train_Grid(args, train_dataset, model, encoder, tokenizer, labels,
+                                              pad_token_label_id)
+        logger.info(" global_step = %s, average loss = %s", global_step, tr_loss)
+
     ##
     # save model
     #
     ##
-    if training_args.do_train and (training_args.local_rank == -1 or torch.distributed.get_rank() == 0):
+    if args.do_train and (args.local_rank == -1 or torch.distributed.get_rank() == 0):
         # Create output directory if needed
-        if not os.path.exists(training_args.output_dir) and training_args.local_rank in [-1, 0]:
-            os.makedirs(training_args.output_dir)
+        if not os.path.exists(args.output_dir) and args.local_rank in [-1, 0]:
+            os.makedirs(args.output_dir)
 
-        logger.info("Saving model checkpoint to %s", training_args.output_dir)
+        logger.info("Saving model checkpoint to %s", args.output_dir)
         # Save a trained model, configuration and tokenizer using `save_pretrained()`.
         # They can then be reloaded using `from_pretrained()`
         model_to_save = (
             model.module if hasattr(model, "module") else model)  # Take care of distributed/parallel training
-        model_to_save.save_pretrained(training_args.output_dir)
-        tokenizer.save_pretrained(training_args.output_dir)
+        model_to_save.save_pretrained(args.output_dir)
+        tokenizer.save_pretrained(args.output_dir)
         # Good practice: save your training arguments together with the trained model
-        torch.save(training_args, os.path.join(training_args.output_dir, "training_args.bin"))
+        torch.save(args, os.path.join(args.output_dir, "args.bin"))
 
-    if training_args.do_eval and training_args.local_rank in [-1, 0]:
-        results, _ = evaluate(args, model, tokenizer, labels, pad_token_label_id, mode="dev", prefix='dev')
-        output_eval_file = os.path.join(args.output_dir, "eval_results.txt")
-        with open(output_eval_file, "a") as writer:
-            writer.write('***** Predict in dev dataset *****')
-            writer.write("{} = {}\n".format('report', str(results['report'])))
-
+    if args.do_eval and args.local_rank in [-1, 0]:
+        if args.feature_type is 'Object':
+            results, _ = evaluate_Object(args, model, frcnn, frcnn_cfg, labels, pad_token_label_id, prefix='dev')
+            output_eval_file = os.path.join(args.output_dir, "eval_results.txt")
+            with open(output_eval_file, "a") as writer:
+                writer.write('***** Predict in dev dataset *****')
+                writer.write("{} = {}\n".format('report', str(results['report'])))
+        elif args.feature_type is 'Grid':
+            results, _ = evaluate_Grid(args, model, encoder, labels, pad_token_label_id,
+                                       prefix='dev')
+            output_eval_file = os.path.join(args.output_dir, "eval_results.txt")
+            with open(output_eval_file, "a") as writer:
+                writer.write('***** Predict in dev dataset *****')
+                writer.write("{} = {}\n".format('report', str(results['report'])))
 
 
 def _mp_fn(index):

@@ -63,14 +63,12 @@ class InputFeatures(object):
 class MMInputFeatures(object):
     """A single set of features of data."""
 
-    def __init__(self, input_ids, input_mask,valid_mask,segment_ids,label_ids,start_ids,end_ids,image):
+    def __init__(self, input_ids, input_mask,valid_mask,segment_ids,label_ids,image):
         self.input_ids = input_ids
         self.input_mask = input_mask
         self.valid_mask = valid_mask
         self.segment_ids = segment_ids
         self.label_ids = label_ids
-        self.start_ids = start_ids
-        self.end_ids = end_ids
         self.image = image
 
 
@@ -214,8 +212,6 @@ def convert_mm_examples_to_features(examples,
                           valid_mask=valid_mask,
                           segment_ids=segment_ids,
                           label_ids=label_ids,
-                          start_ids=start_ids,
-                          end_ids=end_ids,
                           image=image)
         )
     return features
