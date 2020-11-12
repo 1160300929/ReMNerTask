@@ -664,10 +664,13 @@ def main():
     # 定义数据读取类
     if args.feature_type is 'Object':
         token_classification_task = MMNerTask_Object()
-        net = getattr(resnet, 'resnet152')()
-        net.load_state_dict(torch.load(os.path.join(args.resnet_root, 'resnet152.pth')))
-        encoder = myResnet(net, args.fine_tune_cnn, args.device)
+        encoder = frcnn
+        encoder_cfg = frcnn_cfg
     elif args.feature_type is 'Grid':
+        net = getattr(resnet, 'resnet152')()
+        resnet_root = "GridFeature/resnet/"
+        net.load_state_dict(torch.load(os.path.join(resnet_root, 'resnet152.pth')))
+        encoder = myResnet(net, args.fine_tune_cnn, args.device)
         token_classification_task = MMNerTask_Grid()
     else:
         token_classification_task = MMNerTask_Pixel()

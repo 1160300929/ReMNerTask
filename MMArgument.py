@@ -10,7 +10,7 @@ class ModelArguments:
     Arguments pertaining to which model/config/tokenizer we are going to fine-tune from.
     """
 
-    model_name_or_path: str = field(
+    model_name_or_path: str = field(default="bertcrf",
         metadata={"help": "Path to pretrained model or model identifier from huggingface.co/models"}
     )
     config_name: Optional[str] = field(
@@ -54,6 +54,13 @@ class DataTrainingArguments:
     )
     overwrite_cache: bool = field(
         default=False, metadata={"help": "Overwrite the cached training and evaluation sets"}
+    )
+
+    fine_tune_cnn: bool = field(
+        default=False, metadata={"help": "Whether to fine tune CNN"}
+    )
+    task_name: str = field(
+        default="twitter2017",metadata={"help": "The task's name, can be twitter2017 or twitter2015"}
     )
 
 #
