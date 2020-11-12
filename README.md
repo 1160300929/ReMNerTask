@@ -13,6 +13,8 @@ This repo is the experiment code of my multimodal named entity recognition exper
 
 ### dataloader
 - [x] load data
+- [ ] cache features
+- [ ] save models
 
 ### train_process
 - [x] train
