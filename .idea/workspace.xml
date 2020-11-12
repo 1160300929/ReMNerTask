@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46a908eb-b2d7-40ca-81e1-8f5d2e2651d4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/MMArgument.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridFeatureExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GridFeatureExtractor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ObjectFeatureExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObjectFeatureExtractor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_crf_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_crf_ner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_softmax_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_softmax_ner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,11 +36,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run_softmax_ner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="811" column="62" lean-forward="true" selection-start-line="811" selection-start-column="62" selection-end-line="811" selection-end-column="62" />
+            <state relative-caret-position="399">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="399">
+                <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -143,6 +150,7 @@
         <option value="$PROJECT_DIR$/run_crf_ner.py" />
         <option value="$PROJECT_DIR$/MMArgument.py" />
         <option value="$PROJECT_DIR$/run_softmax_ner.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -228,8 +236,8 @@
     <frame x="-1928" y="133" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49554566" visible="true" weight="0.1406744" />
-      <window_info active="true" id="Structure" order="1" sideWeight="0.5044543" side_tool="true" visible="true" weight="0.1406744" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49554566" visible="true" weight="0.1406744" />
+      <window_info id="Structure" order="1" sideWeight="0.5044543" side_tool="true" visible="true" weight="0.1406744" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
@@ -533,8 +541,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/run_softmax_ner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="811" column="62" lean-forward="true" selection-start-line="811" selection-start-column="62" selection-end-line="811" selection-end-column="62" />
+        <state relative-caret-position="399">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="399">
+            <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

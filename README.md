@@ -12,8 +12,8 @@ This repo is the experiment code of my multimodal named entity recognition exper
 - [x] bert
 
 ### dataloader
-- [ ] load data
+- [x] load data
 
 ### train_process
 - [x] train
-- [ ] evaluate
+- [x] evaluate
