@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46a908eb-b2d7-40ca-81e1-8f5d2e2651d4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bert_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/bert_ner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_crf_ner.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_crf_ner.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,26 +19,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run_crf_ner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3158">
-              <caret line="798" lean-forward="true" selection-start-line="798" selection-end-line="798" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bert_ner.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="322" lean-forward="true" selection-start-line="322" selection-end-line="322" />
+            <state relative-caret-position="482">
+              <caret line="281" column="17" lean-forward="true" selection-start-line="281" selection-start-column="17" selection-end-line="281" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://D:/anaconda3/Lib/site-packages/transformers/utils/dummy_pt_objects.py">
+        <entry file="file://$PROJECT_DIR$/ObjectFeatureExtractor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="277" column="6" selection-start-line="277" selection-start-column="6" selection-end-line="277" selection-end-column="6" />
+            <state relative-caret-position="93">
+              <caret line="170" column="45" lean-forward="true" selection-start-line="170" selection-start-column="45" selection-end-line="170" selection-end-column="45" />
+              <folding>
+                <element signature="e#0#56#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/run.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -46,7 +49,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/anaconda3/Lib/site-packages/transformers/tokenization_auto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
+            <state relative-caret-position="3066">
               <caret line="217" column="6" selection-start-line="217" selection-start-column="6" selection-end-line="217" selection-end-column="6" />
             </state>
           </provider>
@@ -55,7 +58,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/anaconda3/Lib/site-packages/transformers/configuration_auto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
+            <state relative-caret-position="3990">
               <caret line="229" column="6" selection-start-line="229" selection-start-column="6" selection-end-line="229" selection-end-column="6" />
             </state>
           </provider>
@@ -64,7 +67,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MMArgument.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
+            <state relative-caret-position="210">
               <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
@@ -88,7 +91,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/anaconda3/Lib/site-packages/transformers/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
+            <state relative-caret-position="3129">
               <caret line="331" column="24" selection-start-line="331" selection-start-column="24" selection-end-line="331" selection-end-column="24" />
             </state>
           </provider>
@@ -97,8 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/anaconda3/Lib/site-packages/transformers/modeling_auto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="1414" column="13" lean-forward="true" selection-start-line="1414" selection-start-column="13" selection-end-line="1414" selection-end-column="13" />
+            <state relative-caret-position="25410">
+              <caret line="1414" column="13" selection-start-line="1414" selection-start-column="13" selection-end-line="1414" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -106,7 +109,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/anaconda3/Lib/site-packages/transformers/modeling_tf_auto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
+            <state relative-caret-position="22260">
               <caret line="1195" column="6" selection-start-line="1195" selection-start-column="6" selection-end-line="1195" selection-end-column="6" />
             </state>
           </provider>
@@ -132,12 +135,12 @@
       <find>LXmertmodel</find>
       <find>auxlabel_id</find>
       <find>auxlabel</find>
-      <find>args</find>
       <find>device</find>
       <find>local_rank</find>
       <find>input_v_features</find>
       <find>automodelfor</find>
       <find>AutoModelForTokenClassification</find>
+      <find>args</find>
     </findStrings>
     <replaceStrings>
       <replace>data_dir</replace>
@@ -174,6 +177,7 @@
         <option value="$PROJECT_DIR$/MMArgument.py" />
         <option value="$PROJECT_DIR$/bert_ner.py" />
         <option value="$PROJECT_DIR$/run_crf_ner.py" />
+        <option value="$PROJECT_DIR$/run.sh" />
       </list>
     </option>
   </component>
@@ -196,27 +200,6 @@
             <path>
               <item name="Re_MNER" type="b2602c69:ProjectViewProjectNode" />
               <item name="Re_MNER" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Re_MNER" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Re_MNER" type="462c0819:PsiDirectoryNode" />
-              <item name="GridFeature" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Re_MNER" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Re_MNER" type="462c0819:PsiDirectoryNode" />
-              <item name="GridFeature" type="462c0819:PsiDirectoryNode" />
-              <item name="resnet" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Re_MNER" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Re_MNER" type="462c0819:PsiDirectoryNode" />
-              <item name="losses" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Re_MNER" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Re_MNER" type="462c0819:PsiDirectoryNode" />
-              <item name="ObjectFeature" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -265,8 +248,8 @@
     <frame x="-1928" y="133" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49554566" visible="true" weight="0.1406744" />
-      <window_info id="Structure" order="1" sideWeight="0.5044543" side_tool="true" visible="true" weight="0.1406744" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4933185" visible="true" weight="0.1406744" />
+      <window_info id="Structure" order="1" sideWeight="0.5066815" side_tool="true" visible="true" weight="0.1406744" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
@@ -489,16 +472,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ObjectFeatureExtractor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="170" column="45" lean-forward="true" selection-start-line="170" selection-start-column="45" selection-end-line="170" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GridFeatureExtractor.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="723">
@@ -516,6 +489,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/training_args.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-214">
+          <caret line="35" column="6" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bert_ner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" column="35" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/utils/dummy_pt_objects.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5817">
+          <caret line="277" column="6" selection-start-line="277" selection-start-column="6" selection-end-line="277" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/tokenization_auto.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3066">
+          <caret line="217" column="6" selection-start-line="217" selection-start-column="6" selection-end-line="217" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/configuration_auto.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3990">
+          <caret line="229" column="6" selection-start-line="229" selection-start-column="6" selection-end-line="229" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MMArgument.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -526,76 +544,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/training_args.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-214">
-          <caret line="35" column="6" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/configuration_auto.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="229" column="6" selection-start-line="229" selection-start-column="6" selection-end-line="229" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/tokenization_auto.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="217" column="6" selection-start-line="217" selection-start-column="6" selection-end-line="217" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MMArgument.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/anaconda3/Lib/site-packages/transformers/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="3129">
           <caret line="331" column="24" selection-start-line="331" selection-start-column="24" selection-end-line="331" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/modeling_tf_auto.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="1195" column="6" selection-start-line="1195" selection-start-column="6" selection-end-line="1195" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/utils/dummy_pt_objects.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="277" column="6" selection-start-line="277" selection-start-column="6" selection-end-line="277" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://D:/anaconda3/Lib/site-packages/transformers/modeling_auto.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="1414" column="13" lean-forward="true" selection-start-line="1414" selection-start-column="13" selection-end-line="1414" selection-end-column="13" />
+        <state relative-caret-position="25410">
+          <caret line="1414" column="13" selection-start-line="1414" selection-start-column="13" selection-end-line="1414" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/anaconda3/Lib/site-packages/transformers/modeling_tf_auto.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22260">
+          <caret line="1195" column="6" selection-start-line="1195" selection-start-column="6" selection-end-line="1195" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ObjectFeatureExtractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="170" column="45" lean-forward="true" selection-start-line="170" selection-start-column="45" selection-end-line="170" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/run_crf_ner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3158">
-          <caret line="798" lean-forward="true" selection-start-line="798" selection-end-line="798" />
+        <state relative-caret-position="482">
+          <caret line="281" column="17" lean-forward="true" selection-start-line="281" selection-start-column="17" selection-end-line="281" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bert_ner.py">
+    <entry file="file://$PROJECT_DIR$/run.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="322" lean-forward="true" selection-start-line="322" selection-end-line="322" />
+        <state relative-caret-position="420">
+          <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
         </state>
       </provider>
     </entry>

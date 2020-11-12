@@ -8,9 +8,6 @@ from Attention import AdaptiveCoFusion
 from utils.utils_ner import valid_sequence_output
 
 
-
-
-
 class BertSoftmaxNer(BertPreTrainedModel):
 
     def __init__(self,args,config):
