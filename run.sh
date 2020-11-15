@@ -1,16 +1,13 @@
+#!/usr/bin/env bash
 export MAX_LENGTH=128
 export BERT_MODEL=bert-base-multilingual-cased
-python3 scripts/preprocess.py train.txt.tmp $BERT_MODEL $MAX_LENGTH > train.txt
-python3 scripts/preprocess.py dev.txt.tmp $BERT_MODEL $MAX_LENGTH > dev.txt
-python3 scripts/preprocess.py test.txt.tmp $BERT_MODEL $MAX_LENGTH > test.txt
-cat train.txt dev.txt test.txt | cut -d " " -f 2 | grep -v "^$"| sort | uniq > labels.txt
 export OUTPUT_DIR=germeval-model
 export BATCH_SIZE=32
 export NUM_EPOCHS=3
 export SAVE_STEPS=750
 export SEED=1
 
-python3 run_ner.py \
+python3 run_crf_ner.py \
 --task_type NER \
 --data_dir data/ \
 --labels ./labels.txt \
